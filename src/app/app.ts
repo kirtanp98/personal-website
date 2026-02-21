@@ -31,7 +31,6 @@ interface PortfolioSection {
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
-  styleUrl: './app.css',
   host: {
     '[class.dark]': 'isDark()'
   }
@@ -203,6 +202,24 @@ export class App {
       behavior: shouldReduceMotion ? 'auto' : 'smooth',
       block: 'start'
     });
+  }
+
+  cardAccentColor(index: number): string {
+    const accent = this.sectionPalette[index % this.sectionPalette.length];
+    switch (accent) {
+      case 'petal':
+        return 'color-mix(in oklab, var(--rose) 75%, #eb9fc6 25%)';
+      case 'lilac':
+        return '#c89ef5';
+      case 'sky':
+        return '#71bef6';
+      case 'violet':
+        return '#9f84f8';
+      case 'plum':
+        return '#f99ba5';
+      default:
+        return 'color-mix(in oklab, var(--rose) 75%, #eb9fc6 25%)';
+    }
   }
 
   private getInitialTheme(): 'light' | 'dark' {

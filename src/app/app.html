@@ -1,48 +1,47 @@
-<div class="page-shell">
-  <div class="backdrop" aria-hidden="true"></div>
-  <div class="grain" aria-hidden="true"></div>
+<div class="site-shell">
+  <div class="ambient-glow" aria-hidden="true"></div>
 
-  <header class="topbar">
-    <a class="brand" href="#top">{{ profile.name }}</a>
+  <div class="ambient-noise" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand-link" href="#top">{{ profile.name }}</a>
 
     <nav class="section-nav" aria-label="Section navigation">
       @for (section of sections; track trackBySection($index, section)) {
-        <a [href]="'#' + section.id" (click)="scrollToSection($event, section.id)">{{ section.title }}</a>
+        <a [href]="'#' + section.id" (click)="scrollToSection($event, section.id)" class="pill pill-link">{{ section.title }}</a>
       }
     </nav>
 
-    <button type="button" class="theme-toggle" (click)="toggleTheme()">
+    <button type="button" class="pill cursor-pointer" (click)="toggleTheme()">
       {{ isDark() ? 'Light' : 'Dark' }}
     </button>
   </header>
 
-  <main id="top" class="content">
-    <section class="hero" aria-label="Introduction">
-      <div class="hero-copy">
+  <main id="top" class="main-wrap">
+    <section class="hero-grid" aria-label="Introduction">
+      <div>
         <p class="eyebrow">Software Engineer Portfolio</p>
-        <h1>Code, craft,<br />and lived-in product detail.</h1>
-        <p class="hero-lede">
+        <h1 class="hero-title">Code, craft,<br />and lived-in product detail.</h1>
+        <p class="hero-summary">
           I am {{ profile.name }}, a product-focused engineer building fast, reliable interfaces and real-time systems.
         </p>
 
-        <div class="hero-links">
-          <a [href]="'mailto:' + profile.email">{{ profile.email }}</a>
+        <div class="contact-row">
+          <a [href]="'mailto:' + profile.email" class="no-underline">{{ profile.email }}</a>
         </div>
 
-        <div class="hero-actions">
-          <a class="primary-action" href="#experience">Explore work</a>
-          <a class="ghost-action" href="#projects">View projects</a>
+        <div class="cta-row">
+          <a class="cta cta-primary" href="#experience">Explore work</a>
+          <a class="cta cta-secondary" href="#projects">View projects</a>
         </div>
       </div>
 
-      <div class="hero-panel">
-        <p class="hero-panel-title">{{ profile.title }}</p>
-        <p>
-          Building with Angular, GraphQL, Kafka, and thoughtful UX systems that feel polished under real load.
-        </p>
-        <div class="social-links">
+      <div class="panel">
+        <p class="panel-title">{{ profile.title }}</p>
+        <p class="m-0 muted">Building with Angular, GraphQL, Kafka, and thoughtful UX systems that feel polished under real load.</p>
+        <div class="contact-row">
           @for (link of socialLinks; track link.label) {
-            <a [href]="link.url" target="_blank" rel="noopener">{{ link.label }}</a>
+            <a [href]="link.url" target="_blank" rel="noopener" class="no-underline">{{ link.label }}</a>
           }
         </div>
       </div>
@@ -50,41 +49,41 @@
       <a class="scroll-hint" href="#experience">Scroll to discover ↓</a>
     </section>
 
-    <div class="sections">
+    <div class="content-stack">
       @for (section of sections; track trackBySection($index, section)) {
-        <section class="resume-section" [id]="section.id">
-          <div class="section-header">
-            <h2>{{ section.title }}</h2>
-            <p>{{ section.blurb }}</p>
+        <section class="content-section" [id]="section.id">
+          <div class="section-head">
+            <h2 class="section-title">{{ section.title }}</h2>
+            <p class="section-blurb">{{ section.blurb }}</p>
           </div>
 
           <div class="item-grid">
             @for (item of section.items; track trackByItem($index, item)) {
-              <article class="item-card" [attr.data-accent]="sectionPalette[$index % sectionPalette.length]">
-                <div class="item-head">
+              <article class="item-card" [style.border-left-color]="cardAccentColor($index)">
+                <div class="item-top">
                   <div>
-                    <h3>{{ item.title }}</h3>
+                    <h3 class="item-title">{{ item.title }}</h3>
                     @if (item.subtitle) {
-                      <p class="subtitle">{{ item.subtitle }}</p>
+                      <p class="item-subtitle">{{ item.subtitle }}</p>
                     }
                   </div>
 
-                  <div class="meta">
+                  <div class="item-meta">
                     @if (item.timeframe) {
-                      <p>{{ item.timeframe }}</p>
+                      <p class="item-meta-text">{{ item.timeframe }}</p>
                     }
                     @if (item.location) {
-                      <p>{{ item.location }}</p>
+                      <p class="item-meta-text">{{ item.location }}</p>
                     }
                   </div>
                 </div>
 
                 @if (item.summary) {
-                  <p class="summary">{{ item.summary }}</p>
+                  <p class="item-summary">{{ item.summary }}</p>
                 }
 
                 @if (item.bullets?.length) {
-                  <ul>
+                  <ul class="item-list">
                     @for (bullet of item.bullets; track bullet) {
                       <li>{{ bullet }}</li>
                     }
@@ -92,23 +91,23 @@
                 }
 
                 @if (item.tags?.length) {
-                  <div class="chip-row">
+                  <div class="badge-row">
                     @for (tag of item.tags; track tag) {
-                      <span class="chip">{{ tag }}</span>
+                      <span class="badge">{{ tag }}</span>
                     }
                   </div>
                 }
 
                 @if (item.metrics?.length) {
-                  <div class="metric-row">
+                  <div class="badge-row">
                     @for (metric of item.metrics; track metric) {
-                      <span>{{ metric }}</span>
+                      <span class="badge">{{ metric }}</span>
                     }
                   </div>
                 }
 
                 @if (item.link) {
-                  <a class="inline-link" [href]="item.link.url" target="_blank" rel="noopener">
+                  <a class="item-link" [href]="item.link.url" target="_blank" rel="noopener">
                     {{ item.link.label }}
                   </a>
                 }
