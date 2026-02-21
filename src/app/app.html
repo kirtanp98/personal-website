@@ -1,5 +1,6 @@
 <div class="page-shell">
   <div class="backdrop" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
 
   <header class="topbar">
     <a class="brand" href="#top">{{ profile.name }}</a>
@@ -16,92 +17,106 @@
   </header>
 
   <main id="top" class="content">
-    <section class="hero">
-      <p class="eyebrow">Portfolio</p>
-      <h1>{{ profile.name }}</h1>
-      <p class="hero-role">{{ profile.title }}</p>
-      <p class="hero-location">{{ profile.location }}</p>
+    <section class="hero" aria-label="Introduction">
+      <div class="hero-copy">
+        <p class="eyebrow">Software Engineer Portfolio</p>
+        <h1>Code, craft,<br />and lived-in product detail.</h1>
+        <p class="hero-lede">
+          I am {{ profile.name }}, a product-focused engineer building fast, reliable interfaces and real-time systems.
+        </p>
 
-      <div class="hero-links">
-        <a [href]="'mailto:' + profile.email">{{ profile.email }}</a>
-        <span>•</span>
-        <a [href]="'tel:' + profile.phone">{{ profile.phone }}</a>
-        <span>•</span>
-        <a href="https://www.kirtanpatel.me" target="_blank" rel="noopener">{{ profile.website }}</a>
-      </div>
-
-      <div class="social-links">
-        @for (link of socialLinks; track link.label) {
-          <a [href]="link.url" target="_blank" rel="noopener">{{ link.label }}</a>
-        }
-      </div>
-    </section>
-
-    @for (section of sections; track trackBySection($index, section)) {
-      <section class="resume-section" [id]="section.id">
-        <div class="section-header">
-          <h2>{{ section.title }}</h2>
-          <p>{{ section.blurb }}</p>
+        <div class="hero-links">
+          <a [href]="'mailto:' + profile.email">{{ profile.email }}</a>
         </div>
 
-        <div class="item-grid">
-          @for (item of section.items; track trackByItem($index, item)) {
-            <article class="item-card" [attr.data-accent]="sectionPalette[$index % sectionPalette.length]">
-              <div class="item-head">
-                <div>
-                  <h3>{{ item.title }}</h3>
-                  @if (item.subtitle) {
-                    <p class="subtitle">{{ item.subtitle }}</p>
-                  }
-                </div>
+        <div class="hero-actions">
+          <a class="primary-action" href="#experience">Explore work</a>
+          <a class="ghost-action" href="#projects">View projects</a>
+        </div>
+      </div>
 
-                <div class="meta">
-                  @if (item.timeframe) {
-                    <p>{{ item.timeframe }}</p>
-                  }
-                  @if (item.location) {
-                    <p>{{ item.location }}</p>
-                  }
-                </div>
-              </div>
-
-              @if (item.summary) {
-                <p class="summary">{{ item.summary }}</p>
-              }
-
-              @if (item.bullets?.length) {
-                <ul>
-                  @for (bullet of item.bullets; track bullet) {
-                    <li>{{ bullet }}</li>
-                  }
-                </ul>
-              }
-
-              @if (item.tags?.length) {
-                <div class="chip-row">
-                  @for (tag of item.tags; track tag) {
-                    <span class="chip">{{ tag }}</span>
-                  }
-                </div>
-              }
-
-              @if (item.metrics?.length) {
-                <div class="metric-row">
-                  @for (metric of item.metrics; track metric) {
-                    <span>{{ metric }}</span>
-                  }
-                </div>
-              }
-
-              @if (item.link) {
-                <a class="inline-link" [href]="item.link.url" target="_blank" rel="noopener">
-                  {{ item.link.label }}
-                </a>
-              }
-            </article>
+      <div class="hero-panel">
+        <p class="hero-panel-title">{{ profile.title }}</p>
+        <p>
+          Building with Angular, GraphQL, Kafka, and thoughtful UX systems that feel polished under real load.
+        </p>
+        <div class="social-links">
+          @for (link of socialLinks; track link.label) {
+            <a [href]="link.url" target="_blank" rel="noopener">{{ link.label }}</a>
           }
         </div>
-      </section>
-    }
+      </div>
+
+      <a class="scroll-hint" href="#experience">Scroll to discover ↓</a>
+    </section>
+
+    <div class="sections">
+      @for (section of sections; track trackBySection($index, section)) {
+        <section class="resume-section" [id]="section.id">
+          <div class="section-header">
+            <h2>{{ section.title }}</h2>
+            <p>{{ section.blurb }}</p>
+          </div>
+
+          <div class="item-grid">
+            @for (item of section.items; track trackByItem($index, item)) {
+              <article class="item-card" [attr.data-accent]="sectionPalette[$index % sectionPalette.length]">
+                <div class="item-head">
+                  <div>
+                    <h3>{{ item.title }}</h3>
+                    @if (item.subtitle) {
+                      <p class="subtitle">{{ item.subtitle }}</p>
+                    }
+                  </div>
+
+                  <div class="meta">
+                    @if (item.timeframe) {
+                      <p>{{ item.timeframe }}</p>
+                    }
+                    @if (item.location) {
+                      <p>{{ item.location }}</p>
+                    }
+                  </div>
+                </div>
+
+                @if (item.summary) {
+                  <p class="summary">{{ item.summary }}</p>
+                }
+
+                @if (item.bullets?.length) {
+                  <ul>
+                    @for (bullet of item.bullets; track bullet) {
+                      <li>{{ bullet }}</li>
+                    }
+                  </ul>
+                }
+
+                @if (item.tags?.length) {
+                  <div class="chip-row">
+                    @for (tag of item.tags; track tag) {
+                      <span class="chip">{{ tag }}</span>
+                    }
+                  </div>
+                }
+
+                @if (item.metrics?.length) {
+                  <div class="metric-row">
+                    @for (metric of item.metrics; track metric) {
+                      <span>{{ metric }}</span>
+                    }
+                  </div>
+                }
+
+                @if (item.link) {
+                  <a class="inline-link" [href]="item.link.url" target="_blank" rel="noopener">
+                    {{ item.link.label }}
+                  </a>
+                }
+              </article>
+            }
+          </div>
+        </section>
+      }
+    </div>
   </main>
 </div>

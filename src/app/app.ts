@@ -39,9 +39,7 @@ export class App {
   readonly profile = {
     name: 'Kirtan Patel',
     title: 'Assistant Vice President, Software Engineer',
-    location: 'Greater New York Area',
     email: 'kirtanpatl@gmail.com',
-    phone: '201-509-9637',
     website: 'www.kirtanpatel.me'
   };
 
