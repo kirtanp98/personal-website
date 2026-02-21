@@ -31,7 +31,10 @@ interface PortfolioSection {
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
+  host: {
+    '[class.dark]': 'isDark()'
+  }
 })
 export class App {
   private readonly document = inject(DOCUMENT);
@@ -189,20 +192,47 @@ export class App {
       return 'light';
     }
 
-    const storedTheme = window.localStorage.getItem('portfolio-theme');
+    const storedTheme = this.getStoredTheme();
     if (storedTheme === 'light' || storedTheme === 'dark') {
       return storedTheme;
     }
 
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    if (typeof window.matchMedia === 'function') {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    return 'light';
   }
 
   private applyTheme(theme: 'light' | 'dark'): void {
     this.document.documentElement.classList.toggle('dark', theme === 'dark');
+    this.document.body.classList.toggle('dark', theme === 'dark');
     this.document.documentElement.style.colorScheme = theme;
 
-    if (typeof window !== 'undefined') {
+    this.setStoredTheme(theme);
+  }
+
+  private getStoredTheme(): string | null {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+
+    try {
+      return window.localStorage.getItem('portfolio-theme');
+    } catch {
+      return null;
+    }
+  }
+
+  private setStoredTheme(theme: 'light' | 'dark'): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    try {
       window.localStorage.setItem('portfolio-theme', theme);
+    } catch {
+      // Ignore storage failures (private mode, disabled storage, etc.).
     }
   }
 }
