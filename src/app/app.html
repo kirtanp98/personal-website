@@ -7,7 +7,7 @@
 
     <nav class="section-nav" aria-label="Section navigation">
       @for (section of sections; track trackBySection($index, section)) {
-        <a [href]="'#' + section.id">{{ section.title }}</a>
+        <a [href]="'#' + section.id" (click)="scrollToSection($event, section.id)">{{ section.title }}</a>
       }
     </nav>
 

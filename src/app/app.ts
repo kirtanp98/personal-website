@@ -187,6 +187,24 @@ export class App {
     this.applyTheme(nextTheme);
   }
 
+  scrollToSection(event: Event, sectionId: string): void {
+    event.preventDefault();
+    const target = this.document.getElementById(sectionId);
+    if (!target) {
+      return;
+    }
+
+    const shouldReduceMotion =
+      typeof window !== 'undefined' &&
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    target.scrollIntoView({
+      behavior: shouldReduceMotion ? 'auto' : 'smooth',
+      block: 'start'
+    });
+  }
+
   private getInitialTheme(): 'light' | 'dark' {
     if (typeof window === 'undefined') {
       return 'light';

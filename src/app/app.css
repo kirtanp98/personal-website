@@ -26,7 +26,8 @@
   min-height: 100vh;
   color: var(--text);
   background: var(--paper);
-  overflow: clip;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .backdrop {
@@ -91,8 +92,11 @@
 
 .section-nav {
   display: flex;
+  align-items: center;
   gap: 0.35rem;
   overflow-x: auto;
+  padding: 0.3rem 0.1rem;
+  margin: -0.3rem -0.1rem;
   scrollbar-width: none;
 }
 
@@ -117,6 +121,10 @@
   padding: 0.35rem 0.8rem;
   font-size: 0.78rem;
   background: color-mix(in oklab, var(--panel) 76%, transparent);
+}
+
+.section-nav a {
+  flex: 0 0 auto;
 }
 
 .section-nav a:hover,
